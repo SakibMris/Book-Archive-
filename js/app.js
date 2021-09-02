@@ -23,7 +23,6 @@ const getText = () => {
 }
 // details showing function 
 const showDetails = data => {
-    console.log(data.numFound);
     document.getElementById('error-handling').innerHTML = `<h1 class=" text-success p-3">Total Search Found:${data.numFound}</h1>`
     // Error handling for wrong search input 
     if (data.numFound === 0) {

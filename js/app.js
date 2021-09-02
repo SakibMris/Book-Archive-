@@ -4,21 +4,24 @@ const getText = () => {
     input.value = "";
     document.getElementById('search-result').innerHTML = "";
     if (inputValue === "") {
-        const box = document.getElementById('error-box');
-        box.classList.add('bg-danger', 'p-2', 'm-5');
-        box.innerHTML = `<h1 class="text-white text-center"> Please Input Book Name</h1>`
+        document.getElementById('error-handling').innerHTML = `<h1 class="text-danger"> Please Input Book Name</h1>`
         return;
     }
     else {
         const url = `https://openlibrary.org/search.json?q=${inputValue}`
         fetch(url)
             .then(res => res.json())
-            .then(data => showDetails(data.docs))
+            .then(data => showDetails(data))
     }
 }
 const showDetails = data => {
-    data.forEach(data => {
-        console.log(data);
+    console.log(data.numFound);
+    document.getElementById('error-handling').innerHTML = `<h1 class=" text-success p-3">Total Search Found:${data.numFound}</h1>`
+    if (data.numFound === 0) {
+        document.getElementById('error-handling').innerHTML = `<h1 class="text-warning">No Result Found</h1>`
+        return;
+    }
+    data.docs.forEach(data => {
         const searchResult = document.getElementById('search-result')
         const div = document.createElement('div')
         div.classList.add('col')
